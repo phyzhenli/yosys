@@ -702,7 +702,7 @@ void abc_module(RTLIL::Design *design, RTLIL::Module *current_module, std::strin
 		std::vector<std::string> &liberty_files, std::vector<std::string> &genlib_files, std::string constr_file,
 		bool cleanup, vector<int> lut_costs, bool dff_mode, std::string clk_str, bool keepff, std::string delay_target,
 		std::string sop_inputs, std::string sop_products, std::string lutin_shared, bool fast_mode,
-		const std::vector<RTLIL::Cell*> &cells, bool show_tempdir, bool sop_mode, bool abc_dress)
+		const std::vector<RTLIL::Cell*> &cells, bool show_tempdir, bool sop_mode, bool abc_dress, std::string blif2gblif_py)
 {
 	module = current_module;
 	map_autoidx = autoidx++;
@@ -1113,6 +1113,8 @@ void abc_module(RTLIL::Design *design, RTLIL::Module *current_module, std::strin
 			log_error("ABC: execution of command \"%s\" failed: return code %d.\n", buffer.c_str(), ret);
 
 		buffer = stringf("%s/%s", tempdir_name.c_str(), "output.blif");
+		if (!blif2gblif_py.empty())
+			std::system(("python3 "+blif2gblif_py+" -blif_file "+buffer).c_str());
 		std::ifstream ifs;
 		ifs.open(buffer);
 		if (ifs.fail())
@@ -1625,7 +1627,7 @@ struct AbcPass : public Pass {
 		cmos_cost = false;
 
 		// get arguments from scratchpad first, then override by command arguments
-		std::string lut_arg, luts_arg, g_arg;
+		std::string lut_arg, luts_arg, g_arg, blif2gblif_py;
 		exe_file = design->scratchpad_get_string("abc.exe", exe_file /* inherit default value if not set */);
 		script_file = design->scratchpad_get_string("abc.script", script_file);
 		default_liberty_file = design->scratchpad_get_string("abc.liberty", default_liberty_file);
@@ -1780,6 +1782,10 @@ struct AbcPass : public Pass {
 			}
 			if (arg == "-markgroups") {
 				markgroups = true;
+				continue;
+			}
+			if (arg == "-blif2gblif" && argidx+1 < args.size()) {
+				blif2gblif_py = args[++argidx];
 				continue;
 			}
 			break;
@@ -1999,7 +2005,7 @@ struct AbcPass : public Pass {
 
 			if (!dff_mode || !clk_str.empty()) {
 				abc_module(design, mod, script_file, exe_file, liberty_files, genlib_files, constr_file, cleanup, lut_costs, dff_mode, clk_str, keepff,
-						delay_target, sop_inputs, sop_products, lutin_shared, fast_mode, mod->selected_cells(), show_tempdir, sop_mode, abc_dress);
+						delay_target, sop_inputs, sop_products, lutin_shared, fast_mode, mod->selected_cells(), show_tempdir, sop_mode, abc_dress, blif2gblif_py);
 				continue;
 			}
 
@@ -2161,7 +2167,7 @@ struct AbcPass : public Pass {
 				srst_polarity = std::get<6>(it.first);
 				srst_sig = assign_map(std::get<7>(it.first));
 				abc_module(design, mod, script_file, exe_file, liberty_files, genlib_files, constr_file, cleanup, lut_costs, !clk_sig.empty(), "$",
-						keepff, delay_target, sop_inputs, sop_products, lutin_shared, fast_mode, it.second, show_tempdir, sop_mode, abc_dress);
+						keepff, delay_target, sop_inputs, sop_products, lutin_shared, fast_mode, it.second, show_tempdir, sop_mode, abc_dress, blif2gblif_py);
 				assign_map.set(mod);
 			}
 		}
