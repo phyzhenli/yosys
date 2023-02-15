@@ -1784,7 +1784,7 @@ struct AbcPass : public Pass {
 				markgroups = true;
 				continue;
 			}
-			if (arg == "-blif2gblif" && argidx+1 < args.size()) {
+			if (arg == "-blif2gblif_py" && argidx+1 < args.size()) {
 				blif2gblif_py = args[++argidx];
 				continue;
 			}
