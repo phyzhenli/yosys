@@ -1733,6 +1733,8 @@ namespace {
 			if (cell->type == ID($_NMUX_))   { port(ID::A,1); port(ID::B,1); port(ID::S,1); port(ID::Y,1); check_expected(); return; }
 			if (cell->type == ID($_AOI3_))   { port(ID::A,1); port(ID::B,1); port(ID::C,1); port(ID::Y,1); check_expected(); return; }
 			if (cell->type == ID($_OAI3_))   { port(ID::A,1); port(ID::B,1); port(ID::C,1); port(ID::Y,1); check_expected(); return; }
+			if (cell->type == ID($_MAJ3_))   { port(ID::A,1); port(ID::B,1); port(ID::C,1); port(ID::Y,1); check_expected(); return; }
+			if (cell->type == ID($_XOR3_))   { port(ID::A,1); port(ID::B,1); port(ID::C,1); port(ID::Y,1); check_expected(); return; }
 			if (cell->type == ID($_AOI4_))   { port(ID::A,1); port(ID::B,1); port(ID::C,1); port(ID::D,1); port(ID::Y,1); check_expected(); return; }
 			if (cell->type == ID($_OAI4_))   { port(ID::A,1); port(ID::B,1); port(ID::C,1); port(ID::D,1); port(ID::Y,1); check_expected(); return; }
 
@@ -2608,6 +2610,8 @@ DEF_METHOD_4(MuxGate,    ID($_MUX_),    A, B, S, Y)
 DEF_METHOD_4(NmuxGate,   ID($_NMUX_),   A, B, S, Y)
 DEF_METHOD_4(Aoi3Gate,   ID($_AOI3_),   A, B, C, Y)
 DEF_METHOD_4(Oai3Gate,   ID($_OAI3_),   A, B, C, Y)
+DEF_METHOD_4(Maj3Gate,   ID($_MAJ3_),   A, B, C, Y)
+DEF_METHOD_4(Xor3Gate,   ID($_XOR3_),   A, B, C, Y)
 DEF_METHOD_5(Aoi4Gate,   ID($_AOI4_),   A, B, C, D, Y)
 DEF_METHOD_5(Oai4Gate,   ID($_OAI4_),   A, B, C, D, Y)
 #undef DEF_METHOD_2

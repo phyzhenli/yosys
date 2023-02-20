@@ -1086,6 +1086,40 @@ bool dump_cell_expr(std::ostream &f, std::string indent, RTLIL::Cell *cell)
 		return true;
 	}
 
+	if (cell->type == ID($_MAJ3_)) {
+		f << stringf("%s" "assign ", indent.c_str());
+		dump_sigspec(f, cell->getPort(ID::Y));
+		f << stringf(" = (");
+		dump_cell_expr_port(f, cell, "A", false);
+		f << stringf(" & ");
+		dump_attributes(f, "", cell->attributes, ' ');
+		dump_cell_expr_port(f, cell, "B", false);
+		f << stringf(") | (");
+		dump_cell_expr_port(f, cell, "A", false);
+		f << stringf(" & ");
+		dump_cell_expr_port(f, cell, "C", false);
+		f << stringf(") | (");
+		dump_cell_expr_port(f, cell, "B", false);
+		f << stringf(" & ");
+		dump_cell_expr_port(f, cell, "C", false);
+		f << stringf(");\n");
+		return true;
+	}
+
+	if (cell->type == ID($_XOR3_)) {
+		f << stringf("%s" "assign ", indent.c_str());
+		dump_sigspec(f, cell->getPort(ID::Y));
+		f << stringf(" = ");
+		dump_cell_expr_port(f, cell, "A", false);
+		f << stringf(" ^ ");
+		dump_attributes(f, "", cell->attributes, ' ');
+		dump_cell_expr_port(f, cell, "B", false);
+		f << stringf(" ^ ");
+		dump_cell_expr_port(f, cell, "C", false);
+		f << stringf(";\n");
+		return true;
+	}
+
 	if (cell->type.in(ID($_AOI4_), ID($_OAI4_))) {
 		f << stringf("%s" "assign ", indent.c_str());
 		dump_sigspec(f, cell->getPort(ID::Y));

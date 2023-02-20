@@ -1352,6 +1352,8 @@ public:
 	RTLIL::Cell* addNmuxGate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_s, const RTLIL::SigBit &sig_y, const std::string &src = "");
 	RTLIL::Cell* addAoi3Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const RTLIL::SigBit &sig_y, const std::string &src = "");
 	RTLIL::Cell* addOai3Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const RTLIL::SigBit &sig_y, const std::string &src = "");
+	RTLIL::Cell* addMaj3Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const RTLIL::SigBit &sig_y, const std::string &src = "");
+	RTLIL::Cell* addXor3Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const RTLIL::SigBit &sig_y, const std::string &src = "");
 	RTLIL::Cell* addAoi4Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const RTLIL::SigBit &sig_d, const RTLIL::SigBit &sig_y, const std::string &src = "");
 	RTLIL::Cell* addOai4Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const RTLIL::SigBit &sig_d, const RTLIL::SigBit &sig_y, const std::string &src = "");
 
@@ -1456,6 +1458,8 @@ public:
 	RTLIL::SigBit NmuxGate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_s, const std::string &src = "");
 	RTLIL::SigBit Aoi3Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const std::string &src = "");
 	RTLIL::SigBit Oai3Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const std::string &src = "");
+	RTLIL::SigBit Maj3Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const std::string &src = "");
+	RTLIL::SigBit Xor3Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const std::string &src = "");
 	RTLIL::SigBit Aoi4Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const RTLIL::SigBit &sig_d, const std::string &src = "");
 	RTLIL::SigBit Oai4Gate   (RTLIL::IdString name, const RTLIL::SigBit &sig_a, const RTLIL::SigBit &sig_b, const RTLIL::SigBit &sig_c, const RTLIL::SigBit &sig_d, const std::string &src = "");
 

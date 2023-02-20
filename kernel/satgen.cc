@@ -204,6 +204,26 @@ bool SatGen::importCell(RTLIL::Cell *cell, int timestep)
 		return true;
 	}
 
+	if (cell->type == ID($_MAJ3_)) {
+		int a = importDefSigSpec(cell->getPort(ID::A), timestep).at(0);
+		int b = importDefSigSpec(cell->getPort(ID::B), timestep).at(0);
+		int c = importDefSigSpec(cell->getPort(ID::C), timestep).at(0);
+		int y = importDefSigSpec(cell->getPort(ID::Y), timestep).at(0);
+		int yy = model_undef ? ez->literal() : y;
+		ez->assume(ez->IFF(ez->OR(ez->OR(ez->AND(a, b), ez->AND(a, c)), ez->AND(b, c)), yy));
+		return true;
+	}
+
+	if (cell->type == ID($_XOR3_)) {
+		int a = importDefSigSpec(cell->getPort(ID::A), timestep).at(0);
+		int b = importDefSigSpec(cell->getPort(ID::B), timestep).at(0);
+		int c = importDefSigSpec(cell->getPort(ID::C), timestep).at(0);
+		int y = importDefSigSpec(cell->getPort(ID::Y), timestep).at(0);
+		int yy = model_undef ? ez->literal() : y;
+		ez->assume(ez->IFF(ez->XOR(ez->XOR(a, b), c), yy));
+		return true;
+	}
+
 	if (cell->type.in(ID($_NOT_), ID($not)))
 	{
 		std::vector<int> a = importDefSigSpec(cell->getPort(ID::A), timestep);

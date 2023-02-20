@@ -204,6 +204,8 @@ struct CellTypes
 		setup_type(ID($_MUX16_), {ID::A, ID::B, ID::C, ID::D, ID::E, ID::F, ID::G, ID::H, ID::I, ID::J, ID::K, ID::L, ID::M, ID::N, ID::O, ID::P, ID::S, ID::T, ID::U, ID::V}, {ID::Y}, true);
 		setup_type(ID($_AOI3_), {ID::A, ID::B, ID::C}, {ID::Y}, true);
 		setup_type(ID($_OAI3_), {ID::A, ID::B, ID::C}, {ID::Y}, true);
+		setup_type(ID($_MAJ3_), {ID::A, ID::B, ID::C}, {ID::Y}, true);
+		setup_type(ID($_XOR3_), {ID::A, ID::B, ID::C}, {ID::Y}, true);
 		setup_type(ID($_AOI4_), {ID::A, ID::B, ID::C, ID::D}, {ID::Y}, true);
 		setup_type(ID($_OAI4_), {ID::A, ID::B, ID::C, ID::D}, {ID::Y}, true);
 	}
@@ -504,7 +506,10 @@ struct CellTypes
 			return eval_not(const_or(const_and(arg1, arg2, false, false, 1), arg3, false, false, 1));
 		if (cell->type == ID($_OAI3_))
 			return eval_not(const_and(const_or(arg1, arg2, false, false, 1), arg3, false, false, 1));
-
+		if (cell->type == ID($_MAJ3_))
+			return const_or(const_or(const_and(arg1, arg2, false, false, 1), const_and(arg1, arg3, false, false, 1), false, false, 1), const_and(arg2, arg3, false, false, 1), false, false, 1);
+		if (cell->type == ID($_XOR3_))
+			return const_or(const_or(arg1, arg2, false, false, 1), arg3, false, false, 1);
 		log_assert(arg3.bits.size() == 0);
 		return eval(cell, arg1, arg2, errp);
 	}
